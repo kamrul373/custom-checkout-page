@@ -5,6 +5,9 @@ const CountrySelector = ( { country } ) => {
 	const { setCountry } = useContext( CheckoutContext )
 	const handleCountry = e => {
 		setCountry( e.target.value )
+		const target = e.currentTarget.parentNode.parentNode;
+		console.log( target )
+		target.style.display = "none"
 	}
 	return (
 		<div className="option">
