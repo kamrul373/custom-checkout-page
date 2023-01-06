@@ -8,9 +8,12 @@ export const CheckoutContext = createContext()
 
 const Checkout = () => {
 	const [country, setCountry] = useState( null )
+	const [divsion, setDvision] = useState( null )
 	const checkout = {
 		country,
-		setCountry
+		setCountry,
+		divsion,
+		setDvision
 	}
 	return (
 		<div className='checkout'>
