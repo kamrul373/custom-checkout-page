@@ -30,15 +30,3 @@ label {
 	display: block;
 	padding: 5px 0;
 }
-
-/* <datalist> and <option> styling */
-.selectbox {
-	position: relative;
-}
-
-.selectbox input {
-	width: calc(100% - 2.5%);
-	position: absolute;
-	top: 50px;
-	z-index: 999;
-}

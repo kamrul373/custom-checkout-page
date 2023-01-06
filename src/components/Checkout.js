@@ -1,18 +1,29 @@
-import React from 'react';
-import Billing from './Billing';
-import Shipping from './Shipping';
+import React, { createContext, useState } from 'react';
 import "./style.css";
-const checkout = () => {
+import Billing from './Billing/Billing';
+import Shipping from './Shipping/Shipping';
+
+export const CheckoutContext = createContext()
+
+
+const Checkout = () => {
+	const [country, setCountry] = useState( null )
+	const checkout = {
+		country,
+		setCountry
+	}
 	return (
 		<div className='checkout'>
-			<div className='billing'>
-				<Billing></Billing>
-			</div>
-			<div className='shipping'>
-				<Shipping></Shipping>
-			</div>
+			<CheckoutContext.Provider value={ checkout }>
+				<div className='billing'>
+					<Billing></Billing>
+				</div>
+				<div className='shipping'>
+					<Shipping></Shipping>
+				</div>
+			</CheckoutContext.Provider>
 		</div>
 	);
 };
 
-export default checkout;
+export default Checkout;
