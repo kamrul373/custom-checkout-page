@@ -17,9 +17,9 @@ const PostoffcieSelector = ( { postoffice } ) => {
 	}
 	return (
 		<div className="option">
-			<label htmlFor={ postoffice.postOffice.toLowerCase() }>{ postoffice.postOffice } - { postoffice.postCode }
+			<label htmlFor={ `${ postoffice.postOffice.toLowerCase() } - ${ postoffice.postCode }` } >{ postoffice.postOffice } - { postoffice.postCode }
 			</label>
-			<input type="radio" className="radio" id={ postoffice.postOffice.toLowerCase() } name="postoffice" value={ `${ postoffice.postOffice } - ${ postoffice.postCode }` } onClick={ handleUpazila } data-code={ postoffice.postCode } />
+			<input type="radio" className="radio" id={ `${ postoffice.postOffice.toLowerCase() } - ${ postoffice.postCode }` } name="postoffice" value={ `${ postoffice.postOffice } - ${ postoffice.postCode }` } onClick={ handleUpazila } data-code={ postoffice.postCode } />
 		</div>
 	);
 };

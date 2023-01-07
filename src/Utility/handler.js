@@ -13,8 +13,12 @@ export const handleFocus = e => {
 	target.style.display = "block"
 }
 
-export const handleChange = ( e, targetid, method ) => {
-	method( null )
+export const handleChange = ( e, targetid, method, nextmehod ) => {
+	method( null );
+	// next input turn to null 
+	nextmehod( null )
+	e.target.parentNode.parentNode.parentNode.nextElementSibling.querySelector( "input" ).value = "";
+
 	const searchText = e.target.value.toLowerCase();
 	const target = e.target.parentNode.parentNode.querySelector( `#${ targetid }` ).childNodes;
 	//console.log( target )

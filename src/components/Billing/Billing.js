@@ -10,7 +10,7 @@ import UpazilaSelector from './UpazilaSelector';
 import PostoffcieSelector from './PostoffcieSelector';
 const Billing = () => {
 	// context
-	const { country, setCountry, countryCode, division, setDivision, divisionCode, district, setDistrict, districtCode, upazilla, setUpazilla, upazillaCode, postoffice, setPostoffice } = useContext( CheckoutContext )
+	const { country, setCountry, countryCode, division, setDivision, divisionCode, district, setDistrict, districtCode, upazilla, setUpazilla, upazillaCode, postoffice, setPostoffice, address, setAddress } = useContext( CheckoutContext )
 	// states
 	const [countries, setCountries] = useState( [] );
 	const [divisions, setDivisions] = useState( [] );
@@ -18,7 +18,6 @@ const Billing = () => {
 	const [upazillas, setUpazillas] = useState( [] );
 	const [postOffices, setPostOffices] = useState( [] );
 	const [toggle, setToggle] = useState( true )
-
 	// fetching coutnies
 	useEffect( () => {
 		fetch( "countries.json" )
@@ -87,7 +86,11 @@ const Billing = () => {
 		}
 	}, [districtCode] )
 
-
+	// handle address
+	const handleAddress = e => {
+		const address = e.target.value;
+		setAddress( address )
+	}
 
 	return (
 		<form>
@@ -105,7 +108,7 @@ const Billing = () => {
 							placeholder="Search Country"
 							onFocus={ handleFocus }
 							defaultValue={ country && country }
-							onChange={ ( e ) => handleChange( e, "optionContainer", setCountry ) } id="country" />
+							onChange={ ( e ) => handleChange( e, "optionContainer", setCountry, setDivision ) } id="country" />
 						<img src={ arrow }
 							alt="arrow"
 							className="arrow"
@@ -113,7 +116,7 @@ const Billing = () => {
 					</div>
 					<div className="options-container" id="optionContainer">
 						{
-							countries.map( country => <CountrySelector key={ country.id } country={ country } setDivisions={ setDivisions }></CountrySelector> )
+							countries.map( country => <CountrySelector key={ country.id } country={ country }></CountrySelector> )
 						}
 					</div>
 
@@ -128,7 +131,7 @@ const Billing = () => {
 							placeholder="Search Division"
 							onFocus={ handleFocus }
 							defaultValue={ division && division }
-							onChange={ ( e ) => handleChange( e, "optionContainer", setDivision ) }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setDivision, setDistrict ) }
 							disabled={ country ? false : true }
 							id="division" />
 						<img src={ arrow } alt="arrow"
@@ -151,7 +154,7 @@ const Billing = () => {
 							placeholder="Search District"
 							onFocus={ handleFocus }
 							defaultValue={ district && district }
-							onChange={ ( e ) => handleChange( e, "optionContainer", setDistrict ) }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setDistrict, setUpazilla ) }
 							disabled={ division ? false : true }
 							id="district" />
 						<img src={ arrow } alt="arrow"
@@ -175,7 +178,7 @@ const Billing = () => {
 							placeholder="Search Upazila"
 							onFocus={ handleFocus }
 							defaultValue={ upazilla && upazilla }
-							onChange={ ( e ) => handleChange( e, "optionContainer", setUpazilla ) }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setUpazilla, setPostoffice ) }
 							disabled={ district ? false : true }
 							id="upazila" />
 						<img src={ arrow } alt="arrow"
@@ -198,8 +201,8 @@ const Billing = () => {
 						<input type="text"
 							placeholder="Search Post Office"
 							onFocus={ handleFocus }
-							defaultValue={ upazilla && upazilla }
-							onChange={ ( e ) => handleChange( e, "optionContainer", setPostoffice ) }
+							defaultValue={ postoffice && postoffice }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setPostoffice, setAddress ) }
 							disabled={ upazilla ? false : true }
 							id="postoffice" />
 						<img src={ arrow } alt="arrow"
@@ -211,6 +214,22 @@ const Billing = () => {
 							postOffices.map( ( postoffice, idx ) => <PostoffcieSelector key={ idx } postoffice={ postoffice }></PostoffcieSelector> )
 						}
 					</div>
+				</div>
+			</div>
+
+			{/* address */ }
+
+			<div className="form-control">
+				<label htmlFor="postoffice">Address</label>
+				<div className='select-box'>
+					<div className="search-box">
+						<input type="text"
+							placeholder="Type your address"
+							onChange={ handleAddress }
+							disabled={ postoffice ? false : true }
+						/>
+					</div>
+
 				</div>
 			</div>
 		</form>

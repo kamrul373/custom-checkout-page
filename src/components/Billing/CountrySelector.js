@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { CheckoutContext } from '../Checkout';
 
-const CountrySelector = ( { country, setDivisions } ) => {
+const CountrySelector = ( { country } ) => {
 	const { setCountry, setCountryCode } = useContext( CheckoutContext )
 	const handleCountry = e => {
 		// setting country name on state
