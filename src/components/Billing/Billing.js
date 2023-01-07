@@ -6,13 +6,17 @@ import { CheckoutContext } from '../Checkout';
 import { handleChange, handleFocus, handleToggle } from '../../Utility/handler';
 import DivisionSelector from './DivisionSelector';
 import DistrictSelector from './DistrictSelector';
+import UpazilaSelector from './UpazilaSelector';
+import PostoffcieSelector from './PostoffcieSelector';
 const Billing = () => {
 	// context
-	const { country, setCountry, countryCode, division, setDivision, divisionCode, district, setDistrict } = useContext( CheckoutContext )
+	const { country, setCountry, countryCode, division, setDivision, divisionCode, district, setDistrict, districtCode, upazilla, setUpazilla, upazillaCode, postoffice, setPostoffice } = useContext( CheckoutContext )
 	// states
 	const [countries, setCountries] = useState( [] );
 	const [divisions, setDivisions] = useState( [] );
 	const [districts, setDistricts] = useState( [] );
+	const [upazillas, setUpazillas] = useState( [] );
+	const [postOffices, setPostOffices] = useState( [] );
 	const [toggle, setToggle] = useState( true )
 
 	// fetching coutnies
@@ -50,6 +54,40 @@ const Billing = () => {
 				} )
 		}
 	}, [divisionCode] )
+
+	// fetching upazila
+	useEffect( () => {
+		if ( districtCode ) {
+			fetch( "upazilas.json" )
+				.then( response => response.json() )
+				.then( data => {
+					//console.log( data )
+					const upazilas = data.upazilas.filter( data => parseInt( data.district_id ) === parseInt( districtCode ) )
+					if ( upazilas.length > 0 ) {
+						setUpazillas( upazilas )
+					}
+
+				} )
+		}
+	}, [districtCode] )
+
+	//  postoffice
+	useEffect( () => {
+		if ( districtCode ) {
+			fetch( "postcodes.json" )
+				.then( response => response.json() )
+				.then( data => {
+					//console.log( data )
+					const postcodes = data.postcodes.filter( data => parseInt( data.district_id ) === parseInt( districtCode ) )
+					if ( postcodes.length > 0 ) {
+						setPostOffices( postcodes )
+					}
+
+				} )
+		}
+	}, [districtCode] )
+
+
 
 	return (
 		<form>
@@ -123,6 +161,54 @@ const Billing = () => {
 					<div className="options-container" id="optionContainer">
 						{
 							districts.map( district => <DistrictSelector key={ district.id } district={ district }></DistrictSelector> )
+						}
+					</div>
+				</div>
+			</div>
+			{/* upazila */ }
+
+			<div className="form-control">
+				<label htmlFor="district">Upazila</label>
+				<div className='select-box'>
+					<div className="search-box">
+						<input type="text"
+							placeholder="Search Upazila"
+							onFocus={ handleFocus }
+							defaultValue={ upazilla && upazilla }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setUpazilla ) }
+							disabled={ district ? false : true }
+							id="upazila" />
+						<img src={ arrow } alt="arrow"
+							className="arrow"
+							onClick={ ( e ) => handleToggle( e, toggle, setToggle ) } />
+					</div>
+					<div className="options-container" id="optionContainer">
+						{
+							upazillas.map( upazilla => <UpazilaSelector key={ upazilla.id } upazila={ upazilla }></UpazilaSelector> )
+						}
+					</div>
+				</div>
+			</div>
+			{/* postoffice */ }
+
+			<div className="form-control">
+				<label htmlFor="postoffice">Post Office</label>
+				<div className='select-box'>
+					<div className="search-box">
+						<input type="text"
+							placeholder="Search Post Office"
+							onFocus={ handleFocus }
+							defaultValue={ upazilla && upazilla }
+							onChange={ ( e ) => handleChange( e, "optionContainer", setPostoffice ) }
+							disabled={ upazilla ? false : true }
+							id="postoffice" />
+						<img src={ arrow } alt="arrow"
+							className="arrow"
+							onClick={ ( e ) => handleToggle( e, toggle, setToggle ) } />
+					</div>
+					<div className="options-container" id="optionContainer">
+						{
+							postOffices.map( ( postoffice, idx ) => <PostoffcieSelector key={ idx } postoffice={ postoffice }></PostoffcieSelector> )
 						}
 					</div>
 				</div>

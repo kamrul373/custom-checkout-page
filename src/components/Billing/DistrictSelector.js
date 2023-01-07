@@ -4,7 +4,7 @@ import { CheckoutContext } from '../Checkout';
 const DistrictSelector = ( { district } ) => {
 	const { setDistrict, setDistrictCode } = useContext( CheckoutContext )
 	const handleDistrict = e => {
-		console.log( e.target.value )
+		//console.log( e.target.value )
 		setDistrict( e.target.value )
 		// getting coutry code
 		const districtCode = e.target.getAttribute( "data-code" );
