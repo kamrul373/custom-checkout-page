@@ -12,15 +12,9 @@ import ShippingPostoffcieSelector from './ShippingPostoffcieSelector';
 const Shipping = () => {
 	// context
 	const { shipping_country, setShippingCountry,
-		shipping_ccountryCode, setShippingCountryCode,
-		shipping_division, setShippingDivision,
-		shipping_divisionCode, setShippingDivisionCode,
-		shipping_district, setShippingDistrict,
-		shipping_districtCode, setShippingDistrictCode,
-		shipping_upazilla, setShippingUpazilla,
-		shipping_upazillaCode, setShippingUpazillaCode,
-		shipping_postoffice, setShippingPostoffice,
-		shipping_address, setShippingAddress, } = useContext( CheckoutContext )
+		shipping_ccountryCode, shipping_division, setShippingDivision, shipping_divisionCode, shipping_district, setShippingDistrict,
+		shipping_districtCode, shipping_upazilla, setShippingUpazilla,
+		shipping_postoffice, setShippingPostoffice, setShippingAddress, country, division, district, upazilla, postoffice, address, } = useContext( CheckoutContext )
 	// states
 	const [countries, setCountries] = useState( [] );
 	const [divisions, setDivisions] = useState( [] );
@@ -101,12 +95,21 @@ const Shipping = () => {
 		const address = e.target.value;
 		setShippingAddress( address )
 	}
-
+	const handleCopyBillingAddress = ( e ) => {
+		e.preventDefault();
+		//country, division, district, upazilla, postoffice, address,
+		document.getElementById( "shippingcountry" ).value = country
+		document.getElementById( "shippingdivision" ).value = division
+		document.getElementById( "shippingdistrict" ).value = district
+		document.getElementById( "shippingupazila" ).value = upazilla
+		document.getElementById( "shippingpostoffice" ).value = postoffice
+		document.getElementById( "shippingaddress" ).value = address
+	}
 	return (
 		<form>
 			<div className='shippingTitle'>
 				<h3>Shipping Address</h3>
-				<button className="btn">Copy Billing Address</button>
+				<button onClick={ handleCopyBillingAddress } className="btn">Copy Billing Address</button>
 			</div>
 			<div className="form-control">
 				<label htmlFor="name">Attention</label>
@@ -238,6 +241,7 @@ const Shipping = () => {
 					<div className="search-box">
 						<input type="text"
 							placeholder="Type your address"
+							id="shippingaddress"
 							onChange={ handleAddress }
 							disabled={ shipping_postoffice ? false : true }
 						/>
