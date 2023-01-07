@@ -1,5 +1,5 @@
 export const handleToggle = ( e, toggle, setToggle ) => {
-	const target = e.currentTarget.parentNode.parentNode.querySelector( "#countryOptionContainer" );
+	const target = e.currentTarget.parentNode.parentNode.querySelector( "#optionContainer" );
 	setToggle( !toggle );
 
 	if ( toggle ) {
@@ -9,7 +9,7 @@ export const handleToggle = ( e, toggle, setToggle ) => {
 	}
 }
 export const handleFocus = e => {
-	const target = e.currentTarget.parentNode.parentNode.querySelector( "#countryOptionContainer" );
+	const target = e.currentTarget.parentNode.parentNode.querySelector( "#optionContainer" );
 	target.style.display = "block"
 }
 

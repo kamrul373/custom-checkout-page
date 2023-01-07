@@ -9,14 +9,25 @@ export const CheckoutContext = createContext()
 const Checkout = () => {
 	const [country, setCountry] = useState( null )
 	const [countryCode, setCountryCode] = useState( null )
-	const [division, setDvision] = useState( null )
+	const [division, setDivision] = useState( null )
+	const [divisionCode, setDivisionCode] = useState( null );
+	const [district, setDistrict] = useState( null )
+	const [districtCode, setDistrictCode] = useState( null )
+
 	const checkout = {
 		country,
 		setCountry,
 		countryCode,
 		setCountryCode,
 		division,
-		setDvision
+		setDivision,
+		divisionCode,
+		setDivisionCode,
+		district,
+		setDistrict,
+		setDistrictCode
+
+
 	}
 	return (
 		<div className='checkout'>
