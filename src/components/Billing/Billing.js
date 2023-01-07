@@ -3,18 +3,38 @@ import CountrySelector from './CountrySelector';
 import "./Billing.css"
 import arrow from "../../assets/img/arrow-down.svg";
 import { CheckoutContext } from '../Checkout';
-import { handleFocus, handleToggle } from '../../Utility/handler';
+import { handleChange, handleFocus, handleToggle } from '../../Utility/handler';
 import DivisionSelector from './DivisionSelector';
 const Billing = () => {
-	const { country } = useContext( CheckoutContext )
+	// context
+	const { country, setCountry, countryCode, division } = useContext( CheckoutContext )
+	// states
 	const [countries, setCountries] = useState( [] );
 	const [divisions, setDivisions] = useState( [] );
 	const [toggle, setToggle] = useState( true )
+
+	// fetching coutnies
 	useEffect( () => {
 		fetch( "countries.json" )
 			.then( response => response.json() )
 			.then( data => setCountries( data ) )
 	}, [] )
+
+	// fetching division
+	useEffect( () => {
+		if ( countryCode ) {
+			fetch( "divisions.json" )
+				.then( response => response.json() )
+				.then( data => {
+					const divisions = data.filter( data => data.country_code === parseInt( countryCode ) )
+					if ( divisions.length > 0 ) {
+						setDivisions( divisions[0]?.divisions )
+					}
+				} )
+		}
+	}, [countryCode] )
+	// handling country search
+
 
 	return (
 		<form>
@@ -28,7 +48,7 @@ const Billing = () => {
 				<label htmlFor="countries">Country</label>
 				<div className='select-box'>
 					<div className="search-box">
-						<input type="text" placeholder="Search Country" onFocus={ handleFocus } defaultValue={ country && country } />
+						<input type="text" placeholder="Search Country" onFocus={ handleFocus } defaultValue={ country && country } onChange={ ( e ) => handleChange( e, "countryOptionContainer", setCountry ) } id="country" />
 						<img src={ arrow } alt="arrow" className="arrow" onClick={ ( e ) => handleToggle( e, toggle, setToggle ) } />
 					</div>
 					<div className="options-container" id="countryOptionContainer">
@@ -44,8 +64,8 @@ const Billing = () => {
 				<label htmlFor="division">Dvision / State</label>
 				<div className='select-box'>
 					<div className="search-box">
-						<input type="text" placeholder="Search Division" />
-						<img src={ arrow } alt="arrow" className="arrow" />
+						<input type="text" placeholder="Search Division" onFocus={ handleFocus } defaultValue={ division && division } disabled={ country ? false : true } />
+						<img src={ arrow } alt="arrow" className="arrow" onClick={ ( e ) => handleToggle( e, toggle, setToggle ) } />
 					</div>
 					<div className="options-container" id="countryOptionContainer">
 						{

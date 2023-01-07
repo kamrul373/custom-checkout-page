@@ -1,19 +1,19 @@
 import React, { useContext } from 'react';
+import { CheckoutContext } from '../Checkout';
 
 const DivisionSelector = ( { division } ) => {
-	console.log( division )
-	const { setDivision } = useContext()
+	const { setDvision } = useContext( CheckoutContext )
 	const handleDivision = e => {
-		setDivision( e.target.value )
+		setDvision( e.target.value )
 		const target = e.currentTarget.parentNode.parentNode;
-		console.log( target )
+		//console.log( target )
 		target.style.display = "none"
 	}
 
 	return (
 		<div className="option">
 			<label htmlFor={ division.name }>{ division.name }</label>
-			<input type="radio" className="radio" id={ division.name } name="country" onClick={ handleDivision } value={ division.name } />
+			<input type="radio" className="radio" id={ division.name } name="division" value={ division.name } onClick={ handleDivision } />
 		</div>
 	);
 };
