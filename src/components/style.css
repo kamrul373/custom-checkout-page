@@ -30,3 +30,21 @@ label {
 	display: block;
 	padding: 5px 0;
 }
+
+@media all and (max-width: 758px) {
+	.checkout {
+		flex-direction: column;
+	}
+
+	.billing,
+	.shipping {
+		width: 90%;
+		padding: 5%;
+	}
+
+	.shippingTitle {
+		flex-direction: column;
+		align-items: flex-start !important;
+	}
+
+}
