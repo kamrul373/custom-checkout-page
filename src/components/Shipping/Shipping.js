@@ -104,6 +104,12 @@ const Shipping = () => {
 		document.getElementById( "shippingupazila" ).value = upazilla
 		document.getElementById( "shippingpostoffice" ).value = postoffice
 		document.getElementById( "shippingaddress" ).value = address
+		setShippingCountry( country )
+		setShippingDivision( division )
+		setShippingDistrict( district )
+		setShippingUpazilla( upazilla )
+		setShippingPostoffice( postoffice )
+		setShippingAddress( address )
 	}
 	return (
 		<form>
